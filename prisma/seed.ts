@@ -14,6 +14,18 @@ const users = [
     name: 'Alex',
     created_at: new Date(Date.now()),
   },
+  {
+    username: 'barry123',
+    password: 'password',
+    name: 'Barry',
+    created_at: new Date(Date.now()),
+  },
+  {
+    username: 'jessy123',
+    password: 'password',
+    name: 'Jessy',
+    created_at: new Date(Date.now()),
+  },
 ]
 
 async function main() {
