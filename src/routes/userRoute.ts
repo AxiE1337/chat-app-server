@@ -13,5 +13,26 @@ router.get('/get', async (req: Request, res: Response) => {
     user: { name: data?.name, id: data?.id, username: data?.username },
   })
 })
+router.get('/search', async (req: Request, res: Response) => {
+  const { username } = req.query
+  if (!username) {
+    return res.sendStatus(404)
+  }
+
+  const users = await prisma.user.findMany({
+    where: {
+      username: username as string,
+    },
+    select: {
+      username: true,
+      name: true,
+      id: true,
+    },
+  })
+
+  res.json({
+    users: users,
+  })
+})
 
 export default router
