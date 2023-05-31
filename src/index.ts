@@ -3,7 +3,6 @@ import express, { Request, Response } from 'express'
 import { PrismaClient } from '@prisma/client'
 import { createServer } from 'http'
 import { Server, Socket } from 'socket.io'
-import { IRoom } from '../types'
 import cookieParser from 'cookie-parser'
 import routes from './routes'
 import cors from 'cors'
@@ -27,24 +26,6 @@ const io = new Server(server, {
     },
   },
 })
-
-export const rooms: IRoom[] = [
-  {
-    usersId: [
-      'e8bf7f21-20dc-4318-bd8b-973649c81fb4',
-      'd0c64d88-b683-4783-b55a-3c9a4865e6a1',
-    ],
-    id: '123123',
-    roomName: ['john123', 'alex123'],
-    messages: [],
-  },
-  {
-    usersId: ['412312', 'e8bf7f21-20dc-4318-bd8b-973649c81fb4'],
-    id: '123123132',
-    roomName: ['no name', 'john123'],
-    messages: [],
-  },
-]
 
 //socket
 io.on('connection', (socket: Socket) => {

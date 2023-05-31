@@ -1,7 +1,6 @@
 import { IRoom } from '../../types'
-import { rooms } from '..'
 
-const findRooms = (uid: string): IUserRoom[] => {
+const findRooms = (uid: string, rooms: IRoom[]): IUserRoom[] => {
   const userRooms: IUserRoom[] = []
   for (let room of rooms) {
     for (let userId of room.usersId) {
