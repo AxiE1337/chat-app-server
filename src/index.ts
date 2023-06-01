@@ -14,29 +14,6 @@ const app = express()
 const server = createServer(app)
 const whitelist = [process.env.CORS_ORIGIN, process.env.CORS_ORIGIN2]
 const port = process.env.PORT || 3001
-
-const io = new Server(server, {
-  cors: {
-    origin: (origin: any, callback: any) => {
-      if (whitelist.indexOf(origin) !== -1) {
-        callback(null, true)
-      } else {
-        callback(new Error('Not allowed by CORS'))
-      }
-    },
-  },
-})
-
-//socket
-io.on('connection', (socket: Socket) => {
-  try {
-    console.log(`connected ${socket.id}`)
-    socketOn(socket, io)
-  } catch (e: unknown) {
-    console.error(e)
-  }
-})
-
 const corsOptions = {
   origin: (origin: string | undefined, callback: any) => {
     if (whitelist.indexOf(origin) !== -1) {
@@ -48,6 +25,23 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200,
 }
+
+const io = new Server(server, {
+  cors: corsOptions,
+})
+
+//socket
+io.on('connection', (socket: Socket) => {
+  try {
+    console.log(`connected ${socket.id}`)
+    socketOn(socket, io)
+    socket.on('disconnect', () => {
+      console.log(`disconnect ${socket.id}`)
+    })
+  } catch (e: unknown) {
+    console.error(e)
+  }
+})
 
 //middleware
 app.use(cors(corsOptions))
