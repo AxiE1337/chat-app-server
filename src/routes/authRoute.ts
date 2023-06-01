@@ -35,7 +35,7 @@ router.post('/register', async (req: Request, res: Response) => {
     },
   })
   const token = jwt.sign({ uid: newUser.id }, jwt_secret, { expiresIn: '1h' })
-  res.cookie('token', token, { httpOnly: true })
+  res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true })
   return res.json({ token: token })
 })
 
@@ -55,7 +55,9 @@ router.post('/login', async (req: Request, res: Response) => {
   if (user) {
     const token = jwt.sign({ uid: user.id }, jwt_secret, { expiresIn: '1h' })
     res.cookie('token', token, {
-      httpOnly: false,
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
     })
     return res.json({ token: token })
   }
