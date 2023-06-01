@@ -29,7 +29,12 @@ const io = new Server(server, {
 
 //socket
 io.on('connection', (socket: Socket) => {
-  socketOn(socket, io)
+  try {
+    console.log(`connected ${socket.id}`)
+    socketOn(socket, io)
+  } catch (e: unknown) {
+    console.error(e)
+  }
 })
 
 const corsOptions = {
