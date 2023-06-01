@@ -6,7 +6,6 @@ const prisma = new PrismaClient()
 
 router.get('/get', async (req: Request, res: Response) => {
   const { userId } = req.headers
-  console.log(userId)
   const data = await prisma.user.findUnique({
     where: { id: userId as string },
   })

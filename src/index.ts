@@ -32,8 +32,8 @@ const io = new Server(server, {
 
 //socket
 io.on('connection', (socket: Socket) => {
+  console.log(`connected ${socket.id}`)
   try {
-    console.log(`connected ${socket.id}`)
     socketOn(socket, io)
     socket.on('disconnect', () => {
       console.log(`disconnect ${socket.id}`)
