@@ -1,3 +1,5 @@
 node_modules
 .env
 todo.todo
+prisma/migrations
+prisma/dev.db
