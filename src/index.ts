@@ -60,5 +60,5 @@ app.use((req: Request, res: Response) => {
 })
 
 server.listen(port, () => {
-  console.log(`Listening on port ${port} origin: ${process.env.CORS_ORIGIN}`)
+  console.log(`Listening on port ${port}`)
 })
