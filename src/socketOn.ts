@@ -11,11 +11,6 @@ const rooms: IRoom[] = [
     id: '123123',
     roomName: ['john123', 'alex123'],
   },
-  {
-    usersId: ['412312', 'e8bf7f21-20dc-4318-bd8b-973649c81fb4'],
-    id: '123123132',
-    roomName: ['no name', 'john123'],
-  },
 ]
 let messages: IMessage[] = []
 
@@ -33,12 +28,17 @@ const socketOn = async (socket: Socket, io: Server) => {
     ({ room, userId }: { room: IRoom; userId: string }) => {
       rooms.push(room)
       const userRooms = findRooms(userId, rooms)
+
       socket.emit('receive_rooms', userRooms)
+      socket
+        .to(room.usersId.filter((r) => r !== userId))
+        .emit('receive_rooms', userRooms)
       socket.join(room.id)
     }
   )
   socket.on('get_rooms', (userId: string) => {
     const userRooms = findRooms(userId, rooms)
+    socket.join(userId)
     socket.emit('receive_rooms', userRooms)
   })
   socket.on('send_message', (message: IMessage) => {
