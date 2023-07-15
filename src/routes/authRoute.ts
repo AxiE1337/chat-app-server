@@ -35,7 +35,7 @@ router.post('/register', async (req: Request, res: Response) => {
     },
   })
   const token = jwt.sign({ uid: newUser.id }, jwt_secret, { expiresIn: '1h' })
-  res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true })
+  res.cookie('token', token, { httpOnly: true, sameSite: 'lax', secure: true })
   return res.json({ token: token })
 })
 
@@ -56,7 +56,7 @@ router.post('/login', async (req: Request, res: Response) => {
     const token = jwt.sign({ uid: user.id }, jwt_secret, { expiresIn: '1h' })
     res.cookie('token', token, {
       httpOnly: true,
-      sameSite: 'none',
+      sameSite: 'lax',
       secure: true,
     })
     return res.json({ token: token })
@@ -68,7 +68,7 @@ router.post('/login', async (req: Request, res: Response) => {
 router.get('/logout', async (req: Request, res: Response) => {
   res.clearCookie('token', {
     httpOnly: true,
-    sameSite: 'none',
+    sameSite: 'lax',
     secure: true,
   })
   return res.status(200).send('logged out')
